@@ -13,7 +13,7 @@ function getListItem(text, i) {
     var _a;
 }
 var link = getLink({
-    href: 'http://ceriously.com',
+    href: 'http://www.ceriously.com',
     className: 'btn',
     text: 'View Profile'
 });
