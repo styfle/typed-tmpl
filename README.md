@@ -12,7 +12,8 @@ The goal is to mimic Handlebars templates with a combination of ES6 Tagged Templ
 This **does not** support two-way binding or any event handling (neither does Handlebars).
 
 ## Usage
-Simple example:
+
+### Simple example:
 
 ```ts
 // Create some variables
@@ -27,14 +28,14 @@ var result = Tmpl.print `<h1>${title}</h1>
 document.getElementById('mydiv').innerHTML = result.getHtml();
 ```
 
-Simple result:
+Result:
 
 ```html
 <h1>Hello world</h1>
 <p>Making Handlebars type safe!</p>
 ```
 
-Conditional example:
+### Conditional example:
 
 ```ts
 const flag = 'isEnabled';
@@ -44,13 +45,13 @@ var p2 = Tmpl.printUnless(isEnabled) `<p>The ${flag} flag is <b>OFF</b></p>`;
 document.getElementById('mydiv').innerHTML = p1.getHtml() + p2.getHtml();
 ```
 
-Conditional result:
+Result:
 
 ```html
 <p>The isEnabled flag is <b>OFF</b></p>
 ```
 
-ForEach example:
+### ForEach example:
 
 ```ts
 // Define the main context
@@ -103,7 +104,7 @@ var result = renderList(context);
 document.getElementById('my-template').innerHTML = result.getHtml();
 ```
 
-ForEach result:
+Result:
 
 ```html
 <h1>Template Libraries</h1>
