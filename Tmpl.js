@@ -28,7 +28,7 @@ var Tmpl;
         "'": '&#39;',
         "/": '&#x2F;'
     };
-    function sanitize(str) {
+    function escapeHtml(str) {
         if (isSafeString(str)) {
             return str.getHtml();
         }
@@ -44,7 +44,7 @@ var Tmpl;
         var result = strings[0];
         var substitutions = values;
         for (var i = 0; i < substitutions.length; i++) {
-            result += sanitize(substitutions[i]) + strings[i + 1];
+            result += escapeHtml(substitutions[i]) + strings[i + 1];
         }
         return new SafeString(result);
     }

@@ -25,11 +25,11 @@ module Tmpl {
 	};
 
 	/**
-	 * Helper function used to sanitize the user's HTML input before rendering template.
+	 * Helper function used to escape the user's HTML input before rendering template.
 	 */
-	function sanitize(str: any): string {
+	function escapeHtml(str: any): string {
 		if (isSafeString(str)) {
-			// This was already sanitized so just return HTML
+			// This was already escaped so just return HTML
 			return str.getHtml();
 		}
 		// We use String constructor for non-string types such as number
@@ -40,14 +40,14 @@ module Tmpl {
 	}
 
 	/**
-	* Print the template and sanitize values if they have not been sanitzed yet.
+	* Print the template and escape values if they have not been escaped yet.
 	* This is only to be used with ES6 Tagged Template Strings.
 	*/
 	export function print(strings: string[], ...values: any[]) {
 		var result = strings[0];
 		var substitutions = values;
 		for (var i = 0; i < substitutions.length; i++) {
-			result += sanitize(substitutions[i]) + strings[i + 1];
+			result += escapeHtml(substitutions[i]) + strings[i + 1];
 		}
 		return new SafeString(result);
 	}
