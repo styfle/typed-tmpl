@@ -18,8 +18,9 @@ var link = getLink({
     text: 'View Profile'
 });
 var div = getUserDiv(link);
-console.log(div.html);
-var list = ['First Item', 'Second Item', 'Last <wat> Item'];
-var listTemplate = (_a = ["<h1>List items</h1>\n<ul>\n\t", "\n</ul>\nHyperlink: ", ""], _a.raw = ["<h1>List items</h1>\n<ul>\n\t", "\n</ul>\nHyperlink: ", ""], Tmpl.print(_a, list.map(getListItem).join('\n  '), link));
-console.log(listTemplate.html);
+console.log(div.getHtml());
+var list = ['First Item', 'Second Item', 'Last & wat <script>alert("hack");</script> Item'];
+var listTemplate = (_a = ["<h1>List items</h1>\n<ul>\n\t", "\n</ul>\nHyperlink: ", ""], _a.raw = ["<h1>List items</h1>\n<ul>\n\t", "\n</ul>\nHyperlink: ", ""], Tmpl.print(_a, Tmpl.printEach(list, getListItem), link));
+console.log(listTemplate.getHtml());
+document.getElementById('my-template').innerHTML = listTemplate.getHtml();
 var _a;

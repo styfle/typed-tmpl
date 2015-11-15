@@ -9,4 +9,4 @@ ${h1}
 <p>This is the body using ${name}</p>
 </div>`;
 // Now we are ready to append the HTML to the DOM
-document.getElementById('my-template').innerHTML = div.html;
+document.getElementById('my-template').innerHTML = div.getHtml();

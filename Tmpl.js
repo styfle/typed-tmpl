@@ -11,22 +11,30 @@ var Tmpl;
             _super.call(this, html);
             this.html = html;
         }
-        SafeString.prototype.toString = function () {
+        SafeString.prototype.getHtml = function () {
             return this.html;
         };
         return SafeString;
     })(String);
     Tmpl.SafeString = SafeString;
+    function isSafeString(str) {
+        return str instanceof SafeString;
+    }
+    var entityMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': '&quot;',
+        "'": '&#39;',
+        "/": '&#x2F;'
+    };
     function sanitize(str) {
-        if (str instanceof SafeString) {
-            return str.html;
+        if (isSafeString(str)) {
+            return str.getHtml();
         }
-        return String(str)
-            .replace('<', '&lt;')
-            .replace('>', '&gt;')
-            .replace("'", '&#39;')
-            .replace('"', '&quot;')
-            .replace('&', '&amp;');
+        return String(str).replace(/[&<>"'\/]/g, function (s) {
+            return entityMap[s];
+        });
     }
     function print(strings) {
         var values = [];
@@ -41,4 +49,12 @@ var Tmpl;
         return new SafeString(result);
     }
     Tmpl.print = print;
+    function printEach(list, fn) {
+        var s = '';
+        for (var i = 0; i < list.length; i++) {
+            s += fn(list[i], i).getHtml() + '  \n';
+        }
+        return new SafeString(s);
+    }
+    Tmpl.printEach = printEach;
 })(Tmpl || (Tmpl = {}));

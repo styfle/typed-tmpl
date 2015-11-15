@@ -1,35 +1,42 @@
 module Tmpl {
 
 	export class SafeString extends String {
-		constructor(public html: string) {
+		constructor(private html: string) {
 			super(html);
 		}
 
-		public toString() {
+		public getHtml() {
 			return this.html;
 		}
 	}
 
-//	function isSafeString(str: any): str is SafeString {
-//      return str && str.constructor && str.constructor.name === 'SafeString'
-//	}
+	function isSafeString(str: any): str is SafeString {
+		// return str && str.constructor && str.constructor.name === 'SafeString'
+		return str instanceof SafeString;
+	}
+
+	var entityMap: { [s: string]: string } = {
+		"&": "&amp;",
+		"<": "&lt;",
+		">": "&gt;",
+		'"': '&quot;',
+		"'": '&#39;',
+		"/": '&#x2F;'
+	};
 
 	/**
-	 * Helper function used to sanitize the user's HTML input before rendering template
+	 * Helper function used to sanitize the user's HTML input before rendering template.
 	 */
 	function sanitize(str: any): string {
-		if (str instanceof SafeString) {
-			// This was already converted to HTML so return HTML
-			return (<SafeString>str).html;
+		if (isSafeString(str)) {
+			// This was already sanitized so just return HTML
+			return str.getHtml();
 		}
 		// We use String constructor for non-string types such as number
-		// Replace example from https://developers.google.com/web/updates/2015/01/ES6-Template-Strings?hl=en
-		return String(str)
-		.replace('<', '&lt;')
-		.replace('>', '&gt;')
-		.replace("'", '&#39;')
-      	.replace('"', '&quot;')
-		.replace('&', '&amp;');
+		// Example from here: http://stackoverflow.com/a/12034334/266535
+		return String(str).replace(/[&<>"'\/]/g, function(s) {
+			return entityMap[s];
+		});
 	}
 
 	/**
@@ -40,8 +47,19 @@ module Tmpl {
 		var result = strings[0];
 		var substitutions = values;
 		for (var i = 0; i < substitutions.length; i++) {
-        	result += sanitize(substitutions[i]) + strings[i + 1];
+			result += sanitize(substitutions[i]) + strings[i + 1];
 		}
 		return new SafeString(result);
+	}
+
+	/**
+	 * Print a list of items, similar to Array.map
+	 */
+	export function printEach<T>(list: T[], fn: (item: T, i: number) => SafeString) {
+		var s = '';
+		for (var i = 0; i < list.length; i++) {
+			s += fn(list[i], i).getHtml() + '  \n';
+		}
+		return new SafeString(s);
 	}
 }

@@ -22,15 +22,17 @@ var link = getLink({
 });
 
 var div = getUserDiv(link);
-console.log(div.html);
+console.log(div.getHtml());
 
-var list = ['First Item', 'Second Item', 'Last <wat> Item'];
+var list = ['First Item', 'Second Item', 'Last & wat <script>alert("hack");</script> Item'];
 
 var listTemplate = Tmpl.print `<h1>List items</h1>
 <ul>
-	${list.map(getListItem).join('\n  ')}
+	${Tmpl.printEach(list, getListItem)}
 </ul>
 Hyperlink: ${link}`;
 
-console.log(listTemplate.html);
+console.log(listTemplate.getHtml())
+
+document.getElementById('my-template').innerHTML = listTemplate.getHtml();
 // TODO: fix bug with First Item being escaped
