@@ -35,4 +35,3 @@ Hyperlink: ${link}`;
 console.log(listTemplate.getHtml())
 
 document.getElementById('my-template').innerHTML = listTemplate.getHtml();
-// TODO: fix bug with First Item being escaped
