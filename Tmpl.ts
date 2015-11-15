@@ -52,6 +52,10 @@ module Tmpl {
 		return new SafeString(result);
 	}
 
+	function printNothing(strings: string[], ...values: any[]) {
+		return new SafeString('');
+	}
+
 	/**
 	 * Print a list of items, similar to Array.map
 	 */
@@ -61,5 +65,19 @@ module Tmpl {
 			s += fn(list[i], i).getHtml() + '  \n';
 		}
 		return new SafeString(s);
+	}
+
+	/**
+	 * Print if the condition is true
+	 */
+	export function printIf(b: boolean) {
+		return b ? print : printNothing;
+	}
+
+	/**
+	 * Print if the condition is false
+	 */
+	export function printUnless(b: boolean) {
+		return printIf(!b);
 	}
 }

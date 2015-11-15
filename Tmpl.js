@@ -49,6 +49,13 @@ var Tmpl;
         return new SafeString(result);
     }
     Tmpl.print = print;
+    function printNothing(strings) {
+        var values = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            values[_i - 1] = arguments[_i];
+        }
+        return new SafeString('');
+    }
     function printEach(list, fn) {
         var s = '';
         for (var i = 0; i < list.length; i++) {
@@ -57,4 +64,12 @@ var Tmpl;
         return new SafeString(s);
     }
     Tmpl.printEach = printEach;
+    function printIf(b) {
+        return b ? print : printNothing;
+    }
+    Tmpl.printIf = printIf;
+    function printUnless(b) {
+        return printIf(!b);
+    }
+    Tmpl.printUnless = printUnless;
 })(Tmpl || (Tmpl = {}));

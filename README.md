@@ -34,6 +34,22 @@ Simple result:
 <p>Making Handlebars type safe!</p>
 ```
 
+Conditional example:
+
+```ts
+const flag = 'isEnabled';
+const isEnabled = false;
+var p1 = Tmpl.printIf(isEnabled) `<p>The ${flag} flag is <b>ON</b></p>`;
+var p2 = Tmpl.printUnless(isEnabled) `<p>The ${flag} flag is <b>OFF</b></p>`;
+document.getElementById('mydiv').innerHTML = p1.getHtml() + p2.getHtml();
+```
+
+Conditional result:
+
+```html
+<p>The isEnabled flag is <b>OFF</b></p>
+```
+
 ForEach example:
 
 ```ts
