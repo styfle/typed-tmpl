@@ -1,5 +1,7 @@
 # Typed Templates
-This is a *work in progress* so please provide feedback! The idea is to take advantage of ES6 Tagged Template Strings and TypeScript static analysis. This work is heavily influenced by the post by [ponyfoo.com](https://ponyfoo.com/articles/es6-template-strings-in-depth). It's worth a read before using this implementation.
+*Update*: This project is no longer maintained since TypeScript added support for typed [JSX](http://www.typescriptlang.org/docs/handbook/jsx.html) syntax (known as TSX). See [wisercode/uibuilder](https://github.com/wisercoder/uibuilder) for a similar type of project that uses TSX, or just use the full [facebook/react](https://github.com/facebook/react) with TSX.
+
+The idea is to take advantage of ES6 Tagged Template Strings and TypeScript static analysis. This work is heavily influenced by the post by [ponyfoo.com](https://ponyfoo.com/articles/es6-template-strings-in-depth). It's worth a read before using this implementation.
 
 ## The Problem
 The problem with other templating systems is they do not work well with TypeScript and are not type safe. They usually rely on some their own DSL such as `{{name}}` in [Handlebars](https://github.com/wycats/handlebars.js). This works great for JavaScript, however we expect more from TypeScript, especially when you have a large project with hundreds of templates. Then you refactor, deploy, and cross your fingers.
